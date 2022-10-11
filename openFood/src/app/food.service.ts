@@ -1,14 +1,22 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
-    providedIn: 'root'  
+  providedIn: 'root'
 })
-export class foodService {
-    constructor(private http: HttpClient) { }
+export class FoodService {
 
-    getCaratteristiche(id: string) {
-        
-    }
+  constructor(private http: HttpClient) { }
+
+  searchProd(query: string) {
+    const url = 'https://world.openfoodfacts.org/cgi/search.pl?search_terms=${query}&page_size=9&json=true';
+    let obsProd = this.http.get(url);
+    return obsProd;
+  }
+
+  searchDet(query: any) {
+    const url = 'https://world.openfoodfacts.org/api/v0/product/${query}';
+    let obsDet = this.http.get(url);
+    return obsDet;
+  }
 }
